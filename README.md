@@ -11,7 +11,7 @@ Yeh project exam ki tayyari ke liye hai. Is mein sirf Markdown (`.md`) files hon
 
 ## Folder Structure
 
-```
+```text
 exam-prep/
 ├── README.md      # Yeh file — project ka taaruf
 └── notes/         # Har subject ki alag .md file yahan rakhein
@@ -23,7 +23,7 @@ exam-prep/
 2. Headings (`#`), bullet points (`-`) aur code blocks ka istemal karein
 3. Kaam ke baad changes commit karein:
 
-   ```
+   ```bash
    git add .
    git commit -m "Math notes update"
    git push

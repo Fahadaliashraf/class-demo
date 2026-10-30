@@ -1,0 +1,22 @@
+# Har push aur pull request pe saari Markdown files check karta hai
+name: Markdown Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code download karo
+        uses: actions/checkout@v4
+
+      - name: Node.js install karo
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Markdown files check karo
+        run: npx --yes markdownlint-cli2@0.24.0 "**/*.md"
