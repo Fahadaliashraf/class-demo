@@ -27,7 +27,7 @@ jobs:
           echo "PR mein badli hui files:"
           cat "$RUNNER_TEMP/changed.txt"
 
-          bad=$(grep -v -e '\.md$' -e '^\.github/' changed.txt || true)
+          bad=$(grep -v -e '\.md$' -e '^\.github/' "$RUNNER_TEMP/changed.txt" || true)
 
           if [ -n "$bad" ]; then
             echo "::error::Is repo mein sirf .md files allowed hain. Yeh files hatayein:"
