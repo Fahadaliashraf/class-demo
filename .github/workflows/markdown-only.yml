@@ -1,0 +1,38 @@
+# Pull request mein koi non-.md file add ya change ho to fail karta hai
+# (.github folder ki files is se bahar hain)
+name: Markdown Only
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  markdown-only:
+    name: markdown-only
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code download karo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Non-.md files dhoondo
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          git -c core.quotepath=false diff --name-only --diff-filter=ACMRT \
+            "$BASE_SHA...$HEAD_SHA" > "$RUNNER_TEMP/changed.txt"
+
+          echo "PR mein badli hui files:"
+          cat "$RUNNER_TEMP/changed.txt"
+
+          bad=$(grep -v -e '\.md$' -e '^\.github/' changed.txt || true)
+
+          if [ -n "$bad" ]; then
+            echo "::error::Is repo mein sirf .md files allowed hain. Yeh files hatayein:"
+            echo "$bad"
+            exit 1
+          fi
+
+          echo "Sab files .md hain (ya .github mein hain). Check pass."
